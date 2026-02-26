@@ -2,23 +2,33 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-commerce MVP</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; line-height: 1.6; }
+        nav { background: #f4f4f4; padding: 10px; margin-bottom: 20px; border-radius: 5px; }
+        .errorlist { color: red; }
+    </style>
 </head>
 <body>
     <nav>
-        <a href="{% url 'profile' %}">Ver Catálogo (Protegido)</a> |
+        <strong>Mi E-commerce</strong> |
+        <a href="{% url 'profile' %}">Panel de Productos (Protegido)</a> |
+        
         {% if user.is_authenticated %}
-            <span>Hola, {{ user.username }}</span> |
+            <span>Bienvenido, <b>{{ user.username }}</b></span> |
             <form action="{% url 'logout' %}" method="post" style="display:inline;">
                 {% csrf_token %}
-                <button type="submit">Cerrar Sesión</button>
+                <button type="submit" style="cursor:pointer;">Cerrar Sesión</button>
             </form>
         {% else %}
             <a href="{% url 'login' %}">Iniciar Sesión</a> |
-            <a href="{% url 'register' %}">Registrarse</a>
+            <a href="{% url 'register' %}">Crear Cuenta</a>
         {% endif %}
     </nav>
-    <hr>
-    {% block content %}{% endblock %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
 </body>
 </html>
